@@ -1,0 +1,424 @@
+import React, { useState, useEffect } from 'react';
+import { 
+  Play, 
+  FileText, 
+  Trophy, 
+  Video, 
+  ShoppingBag, 
+  BarChart3, 
+  TrendingUp, 
+  Zap, 
+  Search, 
+  Users,
+  ChevronRight,
+  Star,
+  Activity,
+  Settings,
+  Share2,
+  Award,
+  Calendar,
+  MapPin,
+  Globe,
+  UserPlus,
+  Target,
+  Smartphone
+} from 'lucide-react';
+
+const App = () => {
+  const [currentFeature, setCurrentFeature] = useState(0);
+  const [isVisible, setIsVisible] = useState(false);
+  const [currentSport, setCurrentSport] = useState(0);
+
+  const sports = ['Cricket', 'Badminton', 'Swimming'];
+  const sportIcons = ['🏏', '🏸', '🏊‍♀️'];
+
+  useEffect(() => {
+    setIsVisible(true);
+    const interval = setInterval(() => {
+      setCurrentFeature((prev) => (prev + 1) % features.length);
+    }, 5000);
+    return () => clearInterval(interval);
+  }, []);
+
+  const features = [
+    {
+      id: 1,
+      icon: <Play className="w-8 h-8" />,
+      title: "Live Scoring",
+      description: "Get instant real-time updates for Cricket matches, Badminton games, and Swimming competitions. Track every point, set, lap time, and stroke with millisecond precision.",
+      details: "Real-time ball-by-ball updates • Live race timing • Point-by-point tracking • Multi-sport compatibility • Auto-sync across devices • Instant push notifications",
+      color: "from-emerald-500 to-teal-600",
+      bgPattern: "bg-gradient-to-br from-emerald-900/20 to-teal-900/20",
+      category: "Core Features"
+    },
+    {
+      id: 2,
+      icon: <FileText className="w-8 h-8" />,
+      title: "Professional Scorecard",
+      description: "Comprehensive scorecards for all sports - from cricket innings to badminton sets to swimming race results. Professional-grade statistics and performance metrics.",
+      details: "Detailed player statistics • Match summaries • Performance analytics • Time splits • Stroke analysis • Export capabilities • PDF generation",
+      color: "from-blue-500 to-cyan-600",
+      bgPattern: "bg-gradient-to-br from-blue-900/20 to-cyan-900/20",
+      category: "Analytics"
+    },
+    {
+      id: 3,
+      icon: <Trophy className="w-8 h-8" />,
+      title: "Tournament Organization",
+      description: "Seamlessly organize tournaments across Cricket, Badminton, and Swimming. From local leagues to international championships with automated scheduling.",
+      details: "Tournament brackets • Multi-sport events • Team management • Automated scheduling • Bracket generation • Prize distribution • Registration management",
+      color: "from-yellow-500 to-orange-600",
+      bgPattern: "bg-gradient-to-br from-yellow-900/20 to-orange-900/20",
+      category: "Management"
+    },
+    {
+      id: 4,
+      icon: <Video className="w-8 h-8" />,
+      title: "Live Streaming",
+      description: "High-definition live streaming for all sports with multi-camera support, commentary integration, and real-time viewer engagement features.",
+      details: "4K HD streaming • Multi-camera angles • Live commentary • Real-time chat • Social sharing • Stream scheduling • Replay functionality",
+      color: "from-purple-500 to-pink-600",
+      bgPattern: "bg-gradient-to-br from-purple-900/20 to-pink-900/20",
+      category: "Broadcasting"
+    },
+    {
+      id: 5,
+      icon: <ShoppingBag className="w-8 h-8" />,
+      title: "Sports Equipment Store",
+      description: "Complete e-commerce platform for Cricket, Badminton, and Swimming equipment. From professional gear to custom team merchandise.",
+      details: "Cricket equipment • Badminton rackets & shuttles • Swimming gear • Custom jerseys • Team merchandise • Bulk orders • Equipment reviews",
+      color: "from-red-500 to-rose-600",
+      bgPattern: "bg-gradient-to-br from-red-900/20 to-rose-900/20",
+      category: "E-commerce"
+    },
+    {
+      id: 6,
+      icon: <BarChart3 className="w-8 h-8" />,
+      title: "Global Leaderboards",
+      description: "Track and compare performance across all sports with global rankings, regional leaderboards, and personalized achievement tracking.",
+      details: "Global rankings • Regional boards • Age group categories • Skill-based matching • Achievement badges • Progress tracking • Performance trends",
+      color: "from-indigo-500 to-purple-600",
+      bgPattern: "bg-gradient-to-br from-indigo-900/20 to-purple-900/20",
+      category: "Rankings"
+    },
+    {
+      id: 7,
+      icon: <TrendingUp className="w-8 h-8" />,
+      title: "AI Player Analysis",
+      description: "Advanced AI-powered analysis identifying best players across sports with performance predictions, weakness identification, and improvement suggestions.",
+      details: "Performance analytics • Player comparisons • Weakness identification • Improvement suggestions • Talent scouting • Prediction algorithms • Coaching insights",
+      color: "from-green-500 to-emerald-600",
+      bgPattern: "bg-gradient-to-br from-green-900/20 to-emerald-900/20",
+      category: "AI & Analytics"
+    },
+    {
+      id: 8,
+      icon: <Zap className="w-8 h-8" />,
+      title: "AI-Generated Highlights",
+      description: "Revolutionary AI technology creates instant highlights for Cricket, Badminton, and Swimming events. No manual editing required - just perfect moments!",
+      details: "Automated editing • Key moment detection • Sport-specific algorithms • Instant sharing • Custom branding • Multiple formats • Social optimization",
+      color: "from-cyan-500 to-blue-600",
+      bgPattern: "bg-gradient-to-br from-cyan-900/20 to-blue-900/20",
+      category: "AI & Media"
+    },
+    {
+      id: 9,
+      icon: <Search className="w-8 h-8" />,
+      title: "Player Discovery",
+      description: "Find players, coaches, teams, and officials across all sports. Advanced matching algorithms connect you with the right people for your needs.",
+      details: "Player discovery • Skill matching • Team formation • Coach finding • Official booking • Local connections • Availability tracking",
+      color: "from-teal-500 to-green-600",
+      bgPattern: "bg-gradient-to-br from-teal-900/20 to-green-900/20",
+      category: "Networking"
+    },
+    {
+      id: 10,
+      icon: <Users className="w-8 h-8" />,
+      title: "Sports Community",
+      description: "Join the ultimate multi-sport community. Connect with athletes, share experiences, and build lasting relationships across Cricket, Badminton, and Swimming.",
+      details: "Social networking • Discussion forums • Event sharing • Global connections • Sport-specific groups • Mentorship programs • Community challenges",
+      color: "from-orange-500 to-red-600",
+      bgPattern: "bg-gradient-to-br from-orange-900/20 to-red-900/20",
+      category: "Social"
+    },
+    {
+      id: 11,
+      icon: <Settings className="w-8 h-8" />,
+      title: "App Customization",
+      description: "Personalize your experience with advanced customization options. Tailor the interface, notifications, and features to match your sporting preferences.",
+      details: "Custom themes • Personalized dashboard • Notification settings • Sport preferences • Widget customization • Layout options • Accessibility features",
+      color: "from-violet-500 to-purple-600",
+      bgPattern: "bg-gradient-to-br from-violet-900/20 to-purple-900/20",
+      category: "Personalization"
+    },
+    {
+      id: 12,
+      icon: <Share2 className="w-8 h-8" />,
+      title: "Social Media Integration",
+      description: "Seamlessly share achievements, highlights, and updates across all major social platforms with optimized content for maximum engagement.",
+      details: "Multi-platform sharing • Auto-generated content • Achievement posts • Live updates • Story integration • Hashtag optimization • Viral content tools",
+      color: "from-pink-500 to-rose-600",
+      bgPattern: "bg-gradient-to-br from-pink-900/20 to-rose-900/20",
+      category: "Social Media"
+    },
+    {
+      id: 13,
+      icon: <Award className="w-8 h-8" />,
+      title: "Digital Awards System",
+      description: "Comprehensive digital awards and recognition system for achievements across all sports with NFT certificates and blockchain verification.",
+      details: "Digital certificates • NFT awards • Blockchain verification • Achievement tracking • Milestone rewards • Custom trophies • Recognition boards",
+      color: "from-amber-500 to-yellow-600",
+      bgPattern: "bg-gradient-to-br from-amber-900/20 to-yellow-900/20",
+      category: "Recognition"
+    },
+    {
+      id: 14,
+      icon: <Target className="w-8 h-8" />,
+      title: "Performance Tracking",
+      description: "Individual player performance tracking with detailed analytics, progress monitoring, and personalized training recommendations for optimal improvement.",
+      details: "Performance metrics • Progress tracking • Training analytics • Goal setting • Improvement plans • Comparative analysis • Personal records",
+      color: "from-emerald-500 to-green-600",
+      bgPattern: "bg-gradient-to-br from-emerald-900/20 to-green-900/20",
+      category: "Performance"
+    },
+    {
+      id: 15,
+      icon: <Calendar className="w-8 h-8" />,
+      title: "Ground Booking",
+      description: "Effortless booking system for Cricket grounds, Badminton courts, and Swimming pools with real-time availability and automated scheduling.",
+      details: "Real-time availability • Online booking • Payment integration • Facility management • Recurring bookings • Cancellation handling • Equipment rental",
+      color: "from-blue-500 to-indigo-600",
+      bgPattern: "bg-gradient-to-br from-blue-900/20 to-indigo-900/20",
+      category: "Booking"
+    },
+    {
+      id: 16,
+      icon: <Globe className="w-8 h-8" />,
+      title: "Website Integration",
+      description: "Seamless website pairing and integration allowing clubs and organizations to embed our platform features directly into their existing websites.",
+      details: "API integration • Widget embedding • Custom branding • White-label solutions • Data synchronization • Multi-site management • Analytics integration",
+      color: "from-cyan-500 to-teal-600",
+      bgPattern: "bg-gradient-to-br from-cyan-900/20 to-teal-900/20",
+      category: "Integration"
+    },
+    {
+      id: 17,
+      icon: <UserPlus className="w-8 h-8" />,
+      title: "Team Creation & Management",
+      description: "Comprehensive team creation and management tools for all sports with role assignments, communication tools, and performance tracking.",
+      details: "Team formation • Role management • Communication tools • Strategy planning • Performance tracking • Training schedules • Team analytics",
+      color: "from-purple-500 to-violet-600",
+      bgPattern: "bg-gradient-to-br from-purple-900/20 to-violet-900/20",
+      category: "Team Management"
+    }
+  ];
+
+  return (
+    <div className="min-h-screen bg-black text-white overflow-hidden relative">
+      {/* Pure Black Background */}
+      <div className="absolute inset-0 bg-black"></div>
+
+      {/* Floating Elements */}
+      <div className="absolute inset-0 overflow-hidden pointer-events-none">
+        {[...Array(30)].map((_, i) => (
+          <div
+            key={i}
+            className={`absolute w-2 h-2 bg-white/10 rounded-full animate-pulse`}
+            style={{
+              left: `${Math.random() * 100}%`,
+              top: `${Math.random() * 100}%`,
+              animationDelay: `${Math.random() * 3}s`,
+              animationDuration: `${2 + Math.random() * 3}s`
+            }}
+          ></div>
+        ))}
+      </div>
+
+      <div className="relative z-10">
+        {/* Header */}
+        <header className={`text-center py-16 px-6 transition-all duration-1000 ${isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-10'}`}>
+          {/* Company Logo Placeholder */}
+          <div className="flex justify-center mb-8">
+            <img src="/logo.png" alt="Company Logo" width={200} height={200} />
+          </div>
+          
+          <div className="inline-flex items-center gap-2 bg-gradient-to-r from-blue-500/20 to-purple-500/20 backdrop-blur-sm border border-white/10 rounded-full px-6 py-2 mb-6">
+            <Smartphone className="w-5 h-5 text-blue-400" />
+            <span className="text-blue-400 font-medium">PROJECT PROPOSAL - Multi-Sport Platform</span>
+          </div>
+          
+          <h1 className="text-6xl md:text-8xl font-bold mb-4 bg-gradient-to-r from-white via-blue-200 to-purple-200 bg-clip-text text-transparent">
+            SportsPro
+          </h1>
+          
+          <div className="text-xl text-yellow-400 font-semibold mb-6">
+             CONCEPT PRESENTATION 🚀
+          </div>
+          
+          <div className="flex justify-center gap-6 mb-8">
+            {sports.map((sport, index) => (
+              <div 
+                key={sport}
+                className={`flex items-center gap-2 px-4 py-2 rounded-full transition-all duration-300 cursor-pointer ${
+                  currentSport === index ? 'bg-blue-500/30 border border-blue-400' : 'bg-gray-800/50 hover:bg-gray-700/50'
+                }`}
+                onClick={() => setCurrentSport(index)}
+              >
+                <span className="text-2xl">{sportIcons[index]}</span>
+                <span className="font-medium">{sport}</span>
+              </div>
+            ))}
+          </div>
+          
+          <p className="text-xl md:text-2xl text-gray-300 max-w-4xl mx-auto leading-relaxed">
+            <strong className="text-white">PROPOSED DEVELOPMENT:</strong> The ultimate platform for Cricket, Badminton, and Swimming. 
+            From live scoring to AI analysis, tournament management to community building - everything needed in one revolutionary application.
+          </p>
+          
+          
+          <div className="flex items-center justify-center gap-4 mt-8">
+            <span className="text-gray-300">Proposed Target:</span>
+            <span className="text-blue-400 font-semibold">100,000+ athletes worldwide</span>
+          </div>
+        </header>
+
+        {/* Features Showcase */}
+        <div className="max-w-7xl mx-auto px-6 py-16">
+          <div className="grid lg:grid-cols-2 gap-12 items-center">
+            {/* Feature Display */}
+            <div className="space-y-8">
+              <div className="flex items-center gap-4 mb-6">
+                <div className="text-sm text-blue-400 font-semibold tracking-wider uppercase">
+                  {features[currentFeature].category}
+                </div>
+                <div className="h-px bg-gradient-to-r from-blue-400 to-transparent flex-1"></div>
+              </div>
+              
+              <div key={features[currentFeature].id} className="space-y-6 animate-fade-in">
+                <div className="flex items-center gap-4">
+                  <div className={`p-4 rounded-2xl bg-gradient-to-r ${features[currentFeature].color} shadow-2xl`}>
+                    {features[currentFeature].icon}
+                  </div>
+                  <div>
+                    <div className="text-sm text-gray-400 font-medium">
+                      {String(features[currentFeature].id).padStart(2, '0')} / {String(features.length).padStart(2, '0')}
+                    </div>
+                    <h2 className="text-4xl font-bold text-white">
+                      {features[currentFeature].title}
+                    </h2>
+                  </div>
+                </div>
+                
+                <p className="text-xl text-gray-300 leading-relaxed">
+                  {features[currentFeature].description}
+                </p>
+                
+                <div className="space-y-3">
+                  {features[currentFeature].details.split(' • ').map((detail, index) => (
+                    <div key={index} className="flex items-center gap-3">
+                      <ChevronRight className="w-5 h-5 text-blue-400 flex-shrink-0" />
+                      <span className="text-gray-300">{detail}</span>
+                    </div>
+                  ))}
+                </div>
+                
+                <button className={`inline-flex items-center gap-2 px-8 py-4 bg-gradient-to-r ${features[currentFeature].color} rounded-xl font-semibold hover:scale-105 transition-all duration-300 shadow-2xl`}>
+                  Explore Feature
+                  <ChevronRight className="w-5 h-5" />
+                </button>
+              </div>
+            </div>
+
+            {/* Feature Grid */}
+            <div className="grid grid-cols-2 gap-4 max-h-[800px] overflow-y-auto scrollbar-hide">
+              {features.map((feature, index) => (
+                <div
+                  key={feature.id}
+                  className={`p-6 rounded-2xl border transition-all duration-500 cursor-pointer hover:scale-105 ${
+                    index === currentFeature
+                      ? `${feature.bgPattern} border-white/20 shadow-2xl`
+                      : 'bg-gray-900/50 border-gray-800 hover:border-gray-700'
+                  }`}
+                  onClick={() => setCurrentFeature(index)}
+                >
+                  <div className={`p-3 rounded-xl bg-gradient-to-r ${feature.color} w-fit mb-4`}>
+                    {feature.icon}
+                  </div>
+                  <h3 className="font-bold text-white mb-2">{feature.title}</h3>
+                  <p className="text-sm text-gray-400 line-clamp-2">{feature.description}</p>
+                  <div className="flex items-center justify-between mt-3">
+                    <div className="text-xs text-blue-400 font-medium">
+                      {String(feature.id).padStart(2, '0')}
+                    </div>
+                    <div className="text-xs text-gray-500 bg-gray-800 px-2 py-1 rounded">
+                      {feature.category}
+                    </div>
+                  </div>
+                </div>
+              ))}
+            </div>
+          </div>
+        </div>
+
+        {/* Stats Section */}
+        <div className="bg-gradient-to-r from-gray-900/50 to-black/50 backdrop-blur-sm border-y border-white/10 py-16">
+          <div className="max-w-6xl mx-auto px-6">
+            <h3 className="text-center text-2xl font-bold text-white mb-8">PROJECTED IMPACT & TARGETS</h3>
+            <div className="grid md:grid-cols-4 gap-8 text-center">
+              {[
+                { number: "100K+", label: "Target Users (Year 1)", icon: <Users className="w-8 h-8" /> },
+                { number: "50K+", label: "Expected Matches/Month", icon: <Trophy className="w-8 h-8" /> },
+                { number: "3", label: "Sports Covered", icon: <Activity className="w-8 h-8" /> },
+                { number: "24/7", label: "Planned Support", icon: <Star className="w-8 h-8" /> }
+              ].map((stat, index) => (
+                <div key={index} className="space-y-4">
+                  <div className="flex justify-center text-blue-400">
+                    {stat.icon}
+                  </div>
+                  <div className="text-4xl font-bold text-white">{stat.number}</div>
+                  <div className="text-gray-400">{stat.label}</div>
+                </div>
+              ))}
+            </div>
+          </div>
+        </div>
+
+        {/* CTA Section */}
+        <div className="text-center py-20 px-6">
+          <h2 className="text-5xl font-bold mb-6 bg-gradient-to-r from-white to-gray-300 bg-clip-text text-transparent">
+            Next Steps for Development
+          </h2>
+          <p className="text-xl text-gray-400 mb-10 max-w-2xl mx-auto">
+            This concept presentation outlines our proposed multi-sport platform. 
+            Let's discuss timeline, resources, and development strategy for bringing SportsPro to life.
+          </p>
+        </div>
+      </div>
+
+      <style jsx>{`
+        @keyframes fade-in {
+          from { opacity: 0; transform: translateY(20px); }
+          to { opacity: 1; transform: translateY(0); }
+        }
+        .animate-fade-in {
+          animation: fade-in 0.6s ease-out;
+        }
+        .line-clamp-2 {
+          display: -webkit-box;
+          -webkit-line-clamp: 2;
+          -webkit-box-orient: vertical;
+          overflow: hidden;
+        }
+        .scrollbar-hide {
+          -ms-overflow-style: none;
+          scrollbar-width: none;
+        }
+        .scrollbar-hide::-webkit-scrollbar {
+          display: none;
+        }
+      `}</style>
+    </div>
+  );
+};
+
+export default App;
