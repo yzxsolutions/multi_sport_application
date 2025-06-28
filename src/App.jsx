@@ -332,7 +332,7 @@ const App = () => {
           
           <div className="flex items-center justify-center gap-4 mt-8">
             <span className="text-gray-300">Proposed Target:</span>
-            <span className="text-blue-400 font-semibold">100,000+ athletes worldwide</span>
+            <span className="text-blue-400 font-semibold">1,000,000+ athletes worldwide</span>
           </div>
         </header>
 
@@ -465,8 +465,8 @@ const App = () => {
             <h3 className="text-center text-2xl font-bold text-white mb-8">PROJECTED IMPACT & TARGETS</h3>
             <div className="grid md:grid-cols-4 gap-8 text-center">
               {[
-                { number: "100K+", label: "Target Users ( Yearly )", icon: <Users className="w-8 h-8" /> },
-                { number: "50K+", label: "Expected Matches/Month", icon: <Trophy className="w-8 h-8" /> },
+                { number: "1M+", label: "Target Users ( Yearly )", icon: <Users className="w-8 h-8" /> },
+                { number: "500K+", label: "Expected Matches/Month", icon: <Trophy className="w-8 h-8" /> },
                 { number: "3", label: "Sports Covered", icon: <Activity className="w-8 h-8" /> },
                 { number: "24/7", label: "Planned Support", icon: <Star className="w-8 h-8" /> }
               ].map((stat, index) => (
