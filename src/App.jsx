@@ -33,40 +33,42 @@ const App = () => {
   const touchStartX = useRef(0);
   const touchEndX = useRef(0);
 
-  const sports = ['Cricket', 'Badminton', 'Swimming'];
-  const sportIcons = ['🏏', '🏸', '🏊‍♀️'];
+  const sports = [
+    {
+      name: 'Cricket',
+      icon: '🏏',
+      description: 'Complete cricket management with ball-by-ball scoring, player statistics, tournament brackets, and live streaming for matches from local club games to international tournaments.'
+    },
+    {
+      name: 'Badminton',
+      icon: '🏸',
+      description: 'Professional badminton scoring system with point-by-point tracking, tournament management, court booking, and player performance analytics for singles and doubles matches.'
+    },
+    {
+      name: 'Swimming',
+      icon: '🏊‍♀️',
+      description: 'Advanced swimming competition management with precise timing, stroke analysis, race results, pool booking, and comprehensive performance tracking for all swimming disciplines.'
+    }
+  ];
 
-  useEffect(() => {
-    setIsVisible(true);
-    
-    // Check if mobile
-    const checkMobile = () => {
-      setIsMobile(window.innerWidth < 1024);
-    };
-    
-    checkMobile();
-    window.addEventListener('resize', checkMobile);
-    
-    // Auto-rotate features (only on desktop)
-    const interval = setInterval(() => {
-      if (window.innerWidth >= 1024) {
-        setCurrentFeature((prev) => (prev + 1) % features.length);
-      }
-    }, 10000);
-    
-    return () => {
-      clearInterval(interval);
-      window.removeEventListener('resize', checkMobile);
-    };
-  }, []);
+  const comingSoonSports = [
+     {
+      name: 'Football',
+      icon: '⚽'
+    },
+    { name: 'Basketball', icon: '🏀' },
+    { name: 'Tennis', icon: '🎾' },
+    { name: 'Volleyball', icon: '🏐' },
+    { name: 'Hockey', icon: '🏑' }
+  ];
 
   const features = [
     {
       id: 1,
       icon: <Play className="w-8 h-8" />,
       title: "Live Scoring",
-      description: "Get instant real-time updates for Cricket matches, Badminton games, and Swimming competitions. Track every point, set, lap time, and stroke with millisecond precision.",
-      details: "Real-time ball-by-ball updates • Live race timing • Point-by-point tracking • Multi-sport compatibility • Auto-sync across devices • Instant push notifications",
+      description: "Get instant real-time updates for Cricket matches, Badminton games, Swimming competitions, and Football matches. Track every point, set, lap time, goal, and stroke with millisecond precision.",
+      details: "Real-time ball-by-ball updates • Live race timing • Point-by-point tracking • Goal tracking & assists • Multi-sport compatibility • Auto-sync across devices • Instant push notifications",
       color: "from-emerald-500 to-teal-600",
       bgPattern: "bg-gradient-to-br from-emerald-900/20 to-teal-900/20",
       category: "Core Features"
@@ -75,8 +77,8 @@ const App = () => {
       id: 2,
       icon: <FileText className="w-8 h-8" />,
       title: "Professional Scorecard",
-      description: "Comprehensive scorecards for all sports - from cricket innings to badminton sets to swimming race results. Professional-grade statistics and performance metrics.",
-      details: "Detailed player statistics • Match summaries • Performance analytics • Time splits • Stroke analysis • Export capabilities • PDF generation",
+      description: "Comprehensive scorecards for all sports - from cricket innings to badminton sets, swimming race results to football match statistics. Professional-grade statistics and performance metrics.",
+      details: "Detailed player statistics • Match summaries • Performance analytics • Time splits • Stroke analysis • Football heat maps • Export capabilities • PDF generation",
       color: "from-blue-500 to-cyan-600",
       bgPattern: "bg-gradient-to-br from-blue-900/20 to-cyan-900/20",
       category: "Analytics"
@@ -85,8 +87,8 @@ const App = () => {
       id: 3,
       icon: <Trophy className="w-8 h-8" />,
       title: "Tournament Organization",
-      description: "Seamlessly organize tournaments across Cricket, Badminton, and Swimming. From local leagues to international championships with automated scheduling.",
-      details: "Tournament brackets • Multi-sport events • Team management • Automated scheduling • Bracket generation • Prize distribution • Registration management",
+      description: "Seamlessly organize tournaments across Cricket, Badminton, Swimming, and Football. From local leagues to international championships with automated scheduling and bracket management.",
+      details: "Tournament brackets • Multi-sport events • Team management • Automated scheduling • Bracket generation • Prize distribution • Registration management • League tables",
       color: "from-yellow-500 to-orange-600",
       bgPattern: "bg-gradient-to-br from-yellow-900/20 to-orange-900/20",
       category: "Management"
@@ -105,8 +107,8 @@ const App = () => {
       id: 5,
       icon: <ShoppingBag className="w-8 h-8" />,
       title: "Sports Equipment Store",
-      description: "Complete e-commerce platform for Cricket, Badminton, and Swimming equipment. From professional gear to custom team merchandise.",
-      details: "Cricket equipment • Badminton rackets & shuttles • Swimming gear • Custom jerseys • Team merchandise • Bulk orders • Equipment reviews",
+      description: "Complete e-commerce platform for Cricket, Badminton, Swimming, and Football equipment. From professional gear to custom team merchandise and personally branded football boots.",
+      details: "Cricket equipment • Badminton rackets & shuttles • Swimming gear • Football boots & balls • Custom jerseys • Team merchandise • Bulk orders • Equipment reviews",
       color: "from-red-500 to-rose-600",
       bgPattern: "bg-gradient-to-br from-red-900/20 to-rose-900/20",
       category: "E-commerce"
@@ -135,8 +137,8 @@ const App = () => {
       id: 8,
       icon: <Zap className="w-8 h-8" />,
       title: "AI-Generated Highlights",
-      description: "Revolutionary AI technology creates instant highlights for Cricket, Badminton, and Swimming events. No manual editing required - just perfect moments!",
-      details: "Automated editing • Key moment detection • Sport-specific algorithms • Instant sharing • Custom branding • Multiple formats • Social optimization",
+      description: "Revolutionary AI technology creates instant highlights for Cricket, Badminton, Swimming, and Football events. Automatically detect goals, saves, wickets, and key moments - no manual editing required!",
+      details: "Automated editing • Key moment detection • Goal & save detection • Sport-specific algorithms • Instant sharing • Custom branding • Multiple formats • Social optimization",
       color: "from-cyan-500 to-blue-600",
       bgPattern: "bg-gradient-to-br from-cyan-900/20 to-blue-900/20",
       category: "AI & Media"
@@ -155,8 +157,8 @@ const App = () => {
       id: 10,
       icon: <Users className="w-8 h-8" />,
       title: "Sports Community",
-      description: "Join the ultimate multi-sport community. Connect with athletes, share experiences, and build lasting relationships across Cricket, Badminton, and Swimming.",
-      details: "Social networking • Discussion forums • Event sharing • Global connections • Sport-specific groups • Mentorship programs • Community challenges",
+      description: "Join the ultimate multi-sport community. Connect with athletes, share experiences, and build lasting relationships across Cricket, Badminton, Swimming, and Football.",
+      details: "Social networking • Discussion forums • Event sharing • Global connections • Sport-specific groups • Mentorship programs • Community challenges • Football fan clubs",
       color: "from-orange-500 to-red-600",
       bgPattern: "bg-gradient-to-br from-orange-900/20 to-red-900/20",
       category: "Social"
@@ -165,7 +167,7 @@ const App = () => {
       id: 11,
       icon: <Settings className="w-8 h-8" />,
       title: "App Customization",
-      description: "Personalize your experience with advanced customization options. Tailor the interface, notifications, and features to match your sporting preferences.",
+      description: "Personalize your experience with advancedI customization options. Tailor the interface, notifications, and features to match your sporting preferences.",
       details: "Custom themes • Personalized dashboard • Notification settings • Sport preferences • Widget customization • Layout options • Accessibility features",
       color: "from-violet-500 to-purple-600",
       bgPattern: "bg-gradient-to-br from-violet-900/20 to-purple-900/20",
@@ -205,8 +207,8 @@ const App = () => {
       id: 15,
       icon: <Calendar className="w-8 h-8" />,
       title: "Ground Booking",
-      description: "Effortless booking system for Cricket grounds, Badminton courts, and Swimming pools with real-time availability and automated scheduling.",
-      details: "Real-time availability • Online booking • Payment integration • Facility management • Recurring bookings • Cancellation handling • Equipment rental",
+      description: "Effortless booking system for Cricket grounds, Badminton courts, Swimming pools, and Football pitches with real-time availability and automated scheduling.",
+      details: "Real-time availability • Online booking • Payment integration • Facility management • Recurring bookings • Cancellation handling • Equipment rental • Pitch conditions",
       color: "from-blue-500 to-indigo-600",
       bgPattern: "bg-gradient-to-br from-blue-900/20 to-indigo-900/20",
       category: "Booking"
@@ -233,6 +235,33 @@ const App = () => {
     }
   ];
 
+  useEffect(() => {
+    setIsVisible(true);
+    
+    // Check if mobile
+    const checkMobile = () => {
+      setIsMobile(window.innerWidth < 1024);
+    };
+    
+    checkMobile();
+    window.addEventListener('resize', checkMobile);
+    
+    // Auto-rotate features (only on desktop and if features exist)
+    let interval;
+    if (features.length > 0) {
+      interval = setInterval(() => {
+        if (window.innerWidth >= 1024) {
+          setCurrentFeature((prev) => (prev + 1) % features.length);
+        }
+      }, 10000);
+    }
+    
+    return () => {
+      if (interval) clearInterval(interval);
+      window.removeEventListener('resize', checkMobile);
+    };
+  }, [features.length]);
+
   // Touch handlers for mobile swipe
   const handleTouchStart = (e) => {
     touchStartX.current = e.touches[0].clientX;
@@ -243,7 +272,7 @@ const App = () => {
   };
 
   const handleTouchEnd = () => {
-    if (!isMobile) return;
+    if (!isMobile || features.length === 0) return;
     
     const threshold = 50;
     const swipeDistance = touchStartX.current - touchEndX.current;
@@ -260,11 +289,62 @@ const App = () => {
   };
 
   const nextFeature = () => {
-    setCurrentFeature((prev) => (prev + 1) % features.length);
+    if (features.length > 0) {
+      setCurrentFeature((prev) => (prev + 1) % features.length);
+    }
   };
 
   const prevFeature = () => {
-    setCurrentFeature((prev) => (prev - 1 + features.length) % features.length);
+    if (features.length > 0) {
+      setCurrentFeature((prev) => (prev - 1 + features.length) % features.length);
+    }
+  };
+
+  // Safeguard for rendering feature content
+  const renderFeatureContent = () => {
+    if (!features[currentFeature]) {
+      return (
+        <div className="text-gray-400 text-center">
+          No feature available
+        </div>
+      );
+    }
+
+    return (
+      <div key={features[currentFeature].id} className="space-y-6 animate-fade-in">
+        <div className="flex items-center gap-4">
+          <div className={`p-4 rounded-xl bg-gradient-to-r ${features[currentFeature].color} shadow-2xl`}>
+            {features[currentFeature].icon}
+          </div>
+          <div>
+            <div className="text-sm text-gray-400 font-medium">
+              {String(features[currentFeature].id).padStart(2, '0')} / {String(features.length).padStart(2, '0')}
+            </div>
+            <h2 className="text-4xl font-bold text-white">
+              {features[currentFeature].title}
+            </h2>
+          </div>
+        </div>
+        
+        <p className="text-xl text-gray-300 leading-relaxed">
+          {features[currentFeature].description}
+        </p>
+        
+        <div className="space-y-3">
+          {features[currentFeature].details.split(' • ').map((detail, index) => (
+            <div key={index} className="flex items-center gap-3">
+              <ChevronRight className="w-5 h-5 text-blue-400 flex-shrink-0" />
+              <span className="text-gray-300">{detail}</span>
+            </div>
+          ))}
+        </div>
+        
+        <button className={`inline-flex items-center gap-2 px-8 py-4 bg-gradient-to-r ${features[currentFeature].color} rounded-xl font-semibold hover:scale-105 transition-all duration-300 shadow-2xl`}>
+          Explore Feature
+          <ChevronRight className="w-5 h-5" />
+        </button>
+      </div>
+    );
   };
 
   return (
@@ -273,6 +353,7 @@ const App = () => {
       <div className="absolute inset-0 bg-black"></div>
 
       {/* Floating Elements */}
+      <a href="https://www.youtube.com/watch?v=example" target="_blank" rel="noopener noreferrer">Watch Demo</a>
       <div className="absolute inset-0 overflow-hidden pointer-events-none">
         {[...Array(30)].map((_, i) => (
           <div
@@ -306,29 +387,70 @@ const App = () => {
           </h1>
           
           <div className="text-xl text-yellow-400 font-semibold mb-6">
-             CONCEPT PRESENTATION 🚀
+            CONCEPT PRESENTATION 🚀
           </div>
           
-          <div className="flex justify-center gap-6 mb-8">
-            {sports.map((sport, index) => (
-              <div 
-                key={sport}
-                className={`flex items-center gap-2 px-4 py-2 rounded-full transition-all duration-300 cursor-pointer ${
-                  currentSport === index ? 'bg-blue-500/30 border border-blue-400' : 'bg-gray-800/50 hover:bg-gray-700/50'
-                }`}
-                onClick={() => setCurrentSport(index)}
-              >
-                <span className="text-2xl">{sportIcons[index]}</span>
-                <span className="font-medium">{sport}</span>
+          {/* Scrollable Sports Section */}
+          <div className="relative mb-8">
+          
+            
+    
+            {/* Scrollable Sports Container */}
+            <div 
+              id="sports-container"
+              className="flex gap-6 overflow-x-auto scrollbar-hide px-16 py-2"
+              style={{ scrollbarWidth: 'none', msOverflowStyle: 'none' }}
+            >
+              {sports.map((sport, index) => (
+                <div 
+                  key={sport.name}
+                  className={`flex items-center gap-2 px-6 py-3 rounded-full transition-all duration-300 cursor-pointer transform hover:scale-105 whitespace-nowrap flex-shrink-0 ${
+                    currentSport === index 
+                      ? 'bg-blue-500/30 border border-blue-400 shadow-lg shadow-blue-500/20' 
+                      : 'bg-gray-800/50 hover:bg-gray-700/50 border border-transparent'
+                  }`}
+                  onClick={() => setCurrentSport(index)}
+                >
+                  <span className="text-2xl">{sport.icon}</span>
+                  <span className="font-medium">{sport.name}</span>
+                </div>
+              ))}
+            </div>
+            
+            {/* Scroll Indicators */}
+            <div className="flex justify-center gap-2 mt-4">
+              {sports.map((_, index) => (
+                <button
+                  key={index}
+                  onClick={() => setCurrentSport(index)}
+                  className={`w-2 h-2 rounded-full transition-all duration-300 ${
+                    index === currentSport 
+                      ? 'bg-blue-400 scale-125' 
+                      : 'bg-gray-600 hover:bg-gray-500'
+                  }`}
+                />
+              ))}
+            </div>
+          </div>
+
+          {/* Sport Description Section */}
+          <div className="max-w-4xl mx-auto mb-8">
+            <div className="bg-gradient-to-r from-gray-900/50 to-gray-800/50 backdrop-blur-sm border border-white/10 rounded-2xl p-6 transition-all duration-500">
+              <div className="flex items-center justify-center gap-3 mb-4">
+                <span className="text-3xl">{sports[currentSport].icon}</span>
+                <h3 className="text-2xl font-bold text-white">{sports[currentSport].name} Platform</h3>
               </div>
-            ))}
+              <p className="text-gray-300 text-lg leading-relaxed animate-fade-in">
+                {sports[currentSport].description}
+              </p>
+            </div>
           </div>
           
-          <p className="text-xl md:text-2xl text-gray-300 max-w-4xl mx-auto leading-relaxed">
-            <strong className="text-white">PROPOSED DEVELOPMENT:</strong> The ultimate platform for Cricket, Badminton, and Swimming. 
+          <p className="text-xl md:text-2xl text-gray-300 max-w-4xl mx Policy: You are about to navigate away from this site. Would you like to continue?
+mx-auto leading-relaxed">
+            <strong className="text-white">PROPOSED DEVELOPMENT:</strong> The ultimate platform for Cricket, Badminton, Swimming, and Football. 
             From live scoring to AI analysis, tournament management to community building - everything needed in one revolutionary application.
           </p>
-          
           
           <div className="flex items-center justify-center gap-4 mt-8">
             <span className="text-gray-300">Proposed Target:</span>
@@ -348,7 +470,7 @@ const App = () => {
             >
               <div className="flex items-center gap-4 mb-6">
                 <div className="text-sm text-blue-400 font-semibold tracking-wider uppercase">
-                  {features[currentFeature].category}
+                  {features[currentFeature]?.category || 'N/A'}
                 </div>
                 <div className="h-px bg-gradient-to-r from-blue-400 to-transparent flex-1"></div>
               </div>
@@ -359,6 +481,7 @@ const App = () => {
                   <button 
                     onClick={prevFeature}
                     className="p-2 rounded-full bg-white/10 hover:bg-white/20 transition-colors"
+                    disabled={features.length === 0}
                   >
                     <ChevronLeft className="w-6 h-6" />
                   </button>
@@ -368,48 +491,17 @@ const App = () => {
                   <button 
                     onClick={nextFeature}
                     className="p-2 rounded-full bg-white/10 hover:bg-white/20 transition-colors"
+                    disabled={features.length === 0}
                   >
                     <ChevronRight className="w-6 h-6" />
                   </button>
                 </div>
               )}
               
-              <div key={features[currentFeature].id} className="space-y-6 animate-fade-in">
-                <div className="flex items-center gap-4">
-                  <div className={`p-4 rounded-2xl bg-gradient-to-r ${features[currentFeature].color} shadow-2xl`}>
-                    {features[currentFeature].icon}
-                  </div>
-                  <div>
-                    <div className="text-sm text-gray-400 font-medium">
-                      {String(features[currentFeature].id).padStart(2, '0')} / {String(features.length).padStart(2, '0')}
-                    </div>
-                    <h2 className="text-4xl font-bold text-white">
-                      {features[currentFeature].title}
-                    </h2>
-                  </div>
-                </div>
-                
-                <p className="text-xl text-gray-300 leading-relaxed">
-                  {features[currentFeature].description}
-                </p>
-                
-                <div className="space-y-3">
-                  {features[currentFeature].details.split(' • ').map((detail, index) => (
-                    <div key={index} className="flex items-center gap-3">
-                      <ChevronRight className="w-5 h-5 text-blue-400 flex-shrink-0" />
-                      <span className="text-gray-300">{detail}</span>
-                    </div>
-                  ))}
-                </div>
-                
-                <button className={`inline-flex items-center gap-2 px-8 py-4 bg-gradient-to-r ${features[currentFeature].color} rounded-xl font-semibold hover:scale-105 transition-all duration-300 shadow-2xl`}>
-                  Explore Feature
-                  <ChevronRight className="w-5 h-5" />
-                </button>
-              </div>
+              {renderFeatureContent()}
 
               {/* Mobile Feature Indicators */}
-              {isMobile && (
+              {isMobile && features.length > 0 && (
                 <div className="flex justify-center gap-2 mt-8">
                   {features.map((_, index) => (
                     <button
@@ -467,7 +559,7 @@ const App = () => {
               {[
                 { number: "1M+", label: "Target Users ( Yearly )", icon: <Users className="w-8 h-8" /> },
                 { number: "500K+", label: "Expected Matches/Month", icon: <Trophy className="w-8 h-8" /> },
-                { number: "3", label: "Sports Covered", icon: <Activity className="w-8 h-8" /> },
+                { number: "4", label: "Sports Covered", icon: <Activity className="w-8 h-8" /> },
                 { number: "24/7", label: "Planned Support", icon: <Star className="w-8 h-8" /> }
               ].map((stat, index) => (
                 <div key={index} className="space-y-4">
@@ -492,6 +584,23 @@ const App = () => {
             Let's discuss timeline, resources, and development strategy for bringing SportsPro to life.
           </p>
         </div>
+
+        {/* Coming Soon Sports Section */}
+        <div className="bg-gradient-to-r mb-20 from-gray-900/50 to-black/50 backdrop-blur-sm border-y border-white/10 py-16">
+          <div className="max-w-6xl mx-auto px-6">
+            <h3 className="text-center text-2xl font-bold text-white mb-8">Add-ons SPORTS</h3>
+            <div className="grid md:grid-cols-4 gap-8">
+              {comingSoonSports.map((sport, index) => (
+                <div key={index} className="text-center space-y-4">
+                  <div className="flex justify-center">
+                    <span className="text-4xl">{sport.icon}</span>
+                  </div>
+                  <div className="text-xl font-semibold text-white">{sport.name}</div>
+                </div>
+              ))}
+            </div>
+          </div>
+        </div>
       </div>
 
       <style jsx>{`
@@ -514,6 +623,16 @@ const App = () => {
         }
         .scrollbar-hide::-webkit-scrollbar {
           display: none;
+        }
+        
+        /* Custom scrollbar for sports container */
+        #sports-container::-webkit-scrollbar {
+          display: none;
+        }
+        
+        #sports-container {
+          scrollbar-width: none;
+          -ms-overflow-style: none;
         }
       `}</style>
     </div>
