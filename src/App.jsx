@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import { 
   Play, 
   FileText, 
@@ -21,23 +21,43 @@ import {
   Globe,
   UserPlus,
   Target,
-  Smartphone
+  Smartphone,
+  ChevronLeft
 } from 'lucide-react';
 
 const App = () => {
   const [currentFeature, setCurrentFeature] = useState(0);
   const [isVisible, setIsVisible] = useState(false);
   const [currentSport, setCurrentSport] = useState(0);
+  const [isMobile, setIsMobile] = useState(false);
+  const touchStartX = useRef(0);
+  const touchEndX = useRef(0);
 
   const sports = ['Cricket', 'Badminton', 'Swimming'];
   const sportIcons = ['🏏', '🏸', '🏊‍♀️'];
 
   useEffect(() => {
     setIsVisible(true);
+    
+    // Check if mobile
+    const checkMobile = () => {
+      setIsMobile(window.innerWidth < 1024);
+    };
+    
+    checkMobile();
+    window.addEventListener('resize', checkMobile);
+    
+    // Auto-rotate features (only on desktop)
     const interval = setInterval(() => {
-      setCurrentFeature((prev) => (prev + 1) % features.length);
-    }, 5000);
-    return () => clearInterval(interval);
+      if (window.innerWidth >= 1024) {
+        setCurrentFeature((prev) => (prev + 1) % features.length);
+      }
+    }, 10000);
+    
+    return () => {
+      clearInterval(interval);
+      window.removeEventListener('resize', checkMobile);
+    };
   }, []);
 
   const features = [
@@ -213,6 +233,40 @@ const App = () => {
     }
   ];
 
+  // Touch handlers for mobile swipe
+  const handleTouchStart = (e) => {
+    touchStartX.current = e.touches[0].clientX;
+  };
+
+  const handleTouchMove = (e) => {
+    touchEndX.current = e.touches[0].clientX;
+  };
+
+  const handleTouchEnd = () => {
+    if (!isMobile) return;
+    
+    const threshold = 50;
+    const swipeDistance = touchStartX.current - touchEndX.current;
+    
+    if (Math.abs(swipeDistance) > threshold) {
+      if (swipeDistance > 0) {
+        // Swipe left - next feature
+        setCurrentFeature((prev) => (prev + 1) % features.length);
+      } else {
+        // Swipe right - previous feature
+        setCurrentFeature((prev) => (prev - 1 + features.length) % features.length);
+      }
+    }
+  };
+
+  const nextFeature = () => {
+    setCurrentFeature((prev) => (prev + 1) % features.length);
+  };
+
+  const prevFeature = () => {
+    setCurrentFeature((prev) => (prev - 1 + features.length) % features.length);
+  };
+
   return (
     <div className="min-h-screen bg-black text-white overflow-hidden relative">
       {/* Pure Black Background */}
@@ -284,15 +338,41 @@ const App = () => {
 
         {/* Features Showcase */}
         <div className="max-w-7xl mx-auto px-6 py-16">
-          <div className="grid lg:grid-cols-2 gap-12 items-center">
+          <div className={`grid gap-12 items-center ${isMobile ? 'grid-cols-1' : 'lg:grid-cols-2'}`}>
             {/* Feature Display */}
-            <div className="space-y-8">
+            <div 
+              className="space-y-8 relative"
+              onTouchStart={handleTouchStart}
+              onTouchMove={handleTouchMove}
+              onTouchEnd={handleTouchEnd}
+            >
               <div className="flex items-center gap-4 mb-6">
                 <div className="text-sm text-blue-400 font-semibold tracking-wider uppercase">
                   {features[currentFeature].category}
                 </div>
                 <div className="h-px bg-gradient-to-r from-blue-400 to-transparent flex-1"></div>
               </div>
+              
+              {/* Mobile Navigation Arrows */}
+              {isMobile && (
+                <div className="flex justify-between items-center mb-4">
+                  <button 
+                    onClick={prevFeature}
+                    className="p-2 rounded-full bg-white/10 hover:bg-white/20 transition-colors"
+                  >
+                    <ChevronLeft className="w-6 h-6" />
+                  </button>
+                  <div className="text-sm text-gray-400">
+                    Swipe to explore features
+                  </div>
+                  <button 
+                    onClick={nextFeature}
+                    className="p-2 rounded-full bg-white/10 hover:bg-white/20 transition-colors"
+                  >
+                    <ChevronRight className="w-6 h-6" />
+                  </button>
+                </div>
+              )}
               
               <div key={features[currentFeature].id} className="space-y-6 animate-fade-in">
                 <div className="flex items-center gap-4">
@@ -327,36 +407,55 @@ const App = () => {
                   <ChevronRight className="w-5 h-5" />
                 </button>
               </div>
+
+              {/* Mobile Feature Indicators */}
+              {isMobile && (
+                <div className="flex justify-center gap-2 mt-8">
+                  {features.map((_, index) => (
+                    <button
+                      key={index}
+                      onClick={() => setCurrentFeature(index)}
+                      className={`w-3 h-3 rounded-full transition-all duration-300 ${
+                        index === currentFeature 
+                          ? 'bg-blue-400 scale-125' 
+                          : 'bg-gray-600 hover:bg-gray-500'
+                      }`}
+                    />
+                  ))}
+                </div>
+              )}
             </div>
 
-            {/* Feature Grid */}
-            <div className="grid grid-cols-2 gap-4 max-h-[800px] overflow-y-auto scrollbar-hide">
-              {features.map((feature, index) => (
-                <div
-                  key={feature.id}
-                  className={`p-6 rounded-2xl border transition-all duration-500 cursor-pointer hover:scale-105 ${
-                    index === currentFeature
-                      ? `${feature.bgPattern} border-white/20 shadow-2xl`
-                      : 'bg-gray-900/50 border-gray-800 hover:border-gray-700'
-                  }`}
-                  onClick={() => setCurrentFeature(index)}
-                >
-                  <div className={`p-3 rounded-xl bg-gradient-to-r ${feature.color} w-fit mb-4`}>
-                    {feature.icon}
-                  </div>
-                  <h3 className="font-bold text-white mb-2">{feature.title}</h3>
-                  <p className="text-sm text-gray-400 line-clamp-2">{feature.description}</p>
-                  <div className="flex items-center justify-between mt-3">
-                    <div className="text-xs text-blue-400 font-medium">
-                      {String(feature.id).padStart(2, '0')}
+            {/* Feature Grid - Only on Desktop */}
+            {!isMobile && (
+              <div className="grid grid-cols-2 gap-4 max-h-[800px] overflow-y-auto scrollbar-hide">
+                {features.map((feature, index) => (
+                  <div
+                    key={feature.id}
+                    className={`p-6 rounded-2xl border transition-all duration-500 cursor-pointer hover:scale-105 ${
+                      index === currentFeature
+                        ? `${feature.bgPattern} border-white/20 shadow-2xl`
+                        : 'bg-gray-900/50 border-gray-800 hover:border-gray-700'
+                    }`}
+                    onClick={() => setCurrentFeature(index)}
+                  >
+                    <div className={`p-3 rounded-xl bg-gradient-to-r ${feature.color} w-fit mb-4`}>
+                      {feature.icon}
                     </div>
-                    <div className="text-xs text-gray-500 bg-gray-800 px-2 py-1 rounded">
-                      {feature.category}
+                    <h3 className="font-bold text-white mb-2">{feature.title}</h3>
+                    <p className="text-sm text-gray-400 line-clamp-2">{feature.description}</p>
+                    <div className="flex items-center justify-between mt-3">
+                      <div className="text-xs text-blue-400 font-medium">
+                        {String(feature.id).padStart(2, '0')}
+                      </div>
+                      <div className="text-xs text-gray-500 bg-gray-800 px-2 py-1 rounded">
+                        {feature.category}
+                      </div>
                     </div>
                   </div>
-                </div>
-              ))}
-            </div>
+                ))}
+              </div>
+            )}
           </div>
         </div>
 
@@ -366,7 +465,7 @@ const App = () => {
             <h3 className="text-center text-2xl font-bold text-white mb-8">PROJECTED IMPACT & TARGETS</h3>
             <div className="grid md:grid-cols-4 gap-8 text-center">
               {[
-                { number: "100K+", label: "Target Users (Year 1)", icon: <Users className="w-8 h-8" /> },
+                { number: "100K+", label: "Target Users ( Yearly )", icon: <Users className="w-8 h-8" /> },
                 { number: "50K+", label: "Expected Matches/Month", icon: <Trophy className="w-8 h-8" /> },
                 { number: "3", label: "Sports Covered", icon: <Activity className="w-8 h-8" /> },
                 { number: "24/7", label: "Planned Support", icon: <Star className="w-8 h-8" /> }
@@ -397,11 +496,11 @@ const App = () => {
 
       <style jsx>{`
         @keyframes fade-in {
-          from { opacity: 0; transform: translateY(20px); }
-          to { opacity: 1; transform: translateY(0); }
+          from { opacity: 0; transform: translateX(30px); }
+          to { opacity: 1; transform: translateX(0); }
         }
         .animate-fade-in {
-          animation: fade-in 0.6s ease-out;
+          animation: fade-in 0.4s ease-out;
         }
         .line-clamp-2 {
           display: -webkit-box;
